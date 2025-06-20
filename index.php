@@ -20,7 +20,7 @@
                     <p><?= htmlspecialchars($row['description']) ?></p>
                     <small>
                         Дата создания: <?= $row['created_at'] ?> | 
-                        Статус: <?= $row['is_completed'] ? 'Выполнено' : 'В процессе' ?>
+                        Статус: <?= $row['is_complited'] ? 'Выполнено' : 'В процессе' ?>
                     </small>
                 </div>
 
