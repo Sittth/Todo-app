@@ -22,6 +22,7 @@
                         Дата создания: <?= $row['created_at'] ?> | 
                         Статус: <?= $row['is_complited'] ? 'Выполнено' : 'В процессе' ?>
                     </small>
+                    <a href="edit.php?id=<?= $row['id'] ?>">Обновить задачу</a>
                 </div>
 
                 <?php endwhile; ?>
