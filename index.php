@@ -23,6 +23,7 @@
                         Статус: <?= $row['is_complited'] ? 'Выполнено' : 'В процессе' ?>
                     </small>
                     <a href="edit.php?id=<?= $row['id'] ?>">Обновить задачу</a>
+                    <a href="delete.php?id=<?= $row['id'] ?>">Удалить задачу</a>
                 </div>
 
                 <?php endwhile; ?>
