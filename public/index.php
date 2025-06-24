@@ -1,4 +1,4 @@
-<?php require 'config.php'; ?>
+<?php require '../config/database.php'; ?>
 <!DOCTYPE html>
 <html>
     <head>
