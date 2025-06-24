@@ -25,8 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <form method="POST">
-    <input type="text" name="title" placeholder="Название" required>
-    <input name="description" placeholder="Описание"></input>
+    <input type="text" name="title" placeholder="Название" value="<?= isset($_POST['title']) ? htmlspecialchars($_POST['title'], ENT_QUOTES) : ''?>" maxlength="100" required>
+    <textarea name="description" placeholder="Описание" maxlength="1000">
+        <?= isset($_POST['description']) ? htmlspecialchars($_POST['description'], ENT_QUOTES): '' ?>
+    </textarea>
     <button type="submit">Добавить</button>
     <?php if (!empty($errors)) : ?>
         <div class="errors">
