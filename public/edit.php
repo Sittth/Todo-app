@@ -63,7 +63,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
     <input type="hidden" name="id" value="<?= $task['id'] ?>">
     <input type="text" name="title" value="<?= htmlspecialchars($task['title']) ?>" required>
-    <textarea name="description" value="<?= htmlspecialchars($task['description']) ?>"></textarea>
+    <textarea name="description"><?= htmlspecialchars($task['description']) ?></textarea>
     <button type="submit">Обновить</button>
 
     <?php if(!empty($errors)) : ?>
