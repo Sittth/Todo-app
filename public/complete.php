@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../config/database.php';
 
 if (isset($_POST['id'])) {
@@ -16,5 +17,12 @@ if (isset($_POST['id'])) {
         $_SESSION['error'] = "Ошибка обновления: " . $e->getMessage();
     }
 }
+
+if(!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error'] = 'Ошибка безопасности';
+    header('Location: index.php');
+    exit;
+}
+
 header('Location: index.php');
 ?>

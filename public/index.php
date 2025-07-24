@@ -1,6 +1,10 @@
 <?php
 session_start();
-require '../config/database.php'; 
+require '../config/database.php';
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +43,13 @@ require '../config/database.php';
                         Статус: <?= $row['is_completed'] ? 'Выполнено' : 'В процессе' ?>
                     </small>
                     <a href="edit.php?id=<?= $row['id'] ?>">Обновить задачу</a>
-                    <a href="delete.php?id=<?= $row['id'] ?>">Удалить задачу</a>
+                    <form action="delete.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES) ?>">
+                        <button type="submit">Удалить задачу</button>
+                    </form>
                     <form action="complete.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES) ?>">
                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                         <input type="checkbox" name="completed" onchange="this.form.submit()" <?= $row['is_completed'] ? 'checked' : '' ?>>
                     </form>

@@ -9,7 +9,9 @@ $task = null;
 $errors = [];
 $success = false;
 
-$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 if(isset($_GET['id'])) {
     $stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = ?");
@@ -60,8 +62,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php if ($task): ?>
 <form method="POST">
-    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-    <input type="hidden" name="id" value="<?= $task['id'] ?>">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES)?>">
+    <input type="hidden" name="id" value="<?= htmlspecialchars($task['id'], ENT_QUOTES) ?>">
     <input type="text" name="title" value="<?= htmlspecialchars($task['title']) ?>" required>
     <textarea name="description"><?= htmlspecialchars($task['description']) ?></textarea>
     <button type="submit">Обновить</button>
