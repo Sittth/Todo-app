@@ -29,7 +29,8 @@ if (empty($_SESSION['csrf_token'])) {
         <?php endif; ?>
 
         <?php
-        $stmt = $pdo -> query("SELECT * FROM tasks ORDER BY created_at DESC");
+        $stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC");
+        $stmt->execute([$_SESSION['user_id']]);
         if ($stmt->rowCount() > 0) {      
             while ($row = $stmt -> fetch()):
                 $taskClass = $row['is_completed'] ? 'completed' : '';
@@ -60,7 +61,7 @@ if (empty($_SESSION['csrf_token'])) {
             echo '<p>Пока нет задач</p>';
         }
         ?>
-
         <a href="create.php">Добавить задачу</a>
+        <a href="logout.php"><br>Выйти из профиля</a>
     </body>
 </html>

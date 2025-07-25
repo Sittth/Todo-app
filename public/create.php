@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO tasks (title, description) VALUES (?, ?)");
-            $stmt->execute([$title, $description]);
+            $stmt = $pdo->prepare("INSERT INTO tasks (title, description, user_id) VALUES (?, ?, ?)");
+            $stmt->execute([$title, $description, $_SESSION['user_id']]);
             header('Location: index.php');
             exit;
         }
@@ -36,7 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 ?>
 
 <form method="POST">

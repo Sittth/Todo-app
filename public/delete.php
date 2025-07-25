@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['id'])) {
         try {
-            $check = $pdo->prepare("SELECT id FROM tasks WHERE id = ?");
-            $check->execute([$_POST['id']]);
+            $check = $pdo->prepare("SELECT id FROM tasks WHERE id = ? AND user_id = ?");
+            $check->execute([$_POST['id'], $_SESSION['user_id']]);
 
             if ($check->fetch()) {
-                $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ?");
-                $stmt->execute([$_POST['id']]);
+                $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ? AND user_id = ?");
+                $stmt->execute([$_POST['id'], $_SESSION['user_id']]);
                 $_SESSION['success'] = "Задача удалена";
             }
             else {

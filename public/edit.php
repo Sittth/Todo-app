@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 if(isset($_GET['id'])) {
-    $stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = ?");
-    $stmt->execute([$_GET['id']]);
+    $stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = ? AND user_id = ?");
+    $stmt->execute([$_GET['id'], $_SESSION['user_id']]);
     $task = $stmt->fetch();
 }
 
@@ -41,8 +41,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            $stmt = $pdo->prepare("UPDATE tasks SET title = ?, description = ? WHERE id = ?");
-            $stmt->execute([$title, $description, $_POST['id']]);
+            $stmt = $pdo->prepare("UPDATE tasks SET title = ?, description = ? WHERE id = ? AND user_id = ?");
+            $stmt->execute([$title, $description, $_POST['id'], $_SESSION['user_id']]);
 
             if ($stmt->rowCount() > 0) {
                 $_SESSION['success'] = "Задача успешно обновлена";
